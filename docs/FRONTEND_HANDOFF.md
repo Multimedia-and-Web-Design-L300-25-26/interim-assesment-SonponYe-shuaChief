@@ -95,3 +95,7 @@ Frontend should:
 ## 8) Quick endpoint reference
 
 See the endpoint list in [docs/ENDPOINTS.md](docs/ENDPOINTS.md).
+
+## 9) Copy-paste API client
+
+Use [docs/FRONTEND_API_CLIENT.md](docs/FRONTEND_API_CLIENT.md) if you want a ready-made shared API layer for fetch or axios.
