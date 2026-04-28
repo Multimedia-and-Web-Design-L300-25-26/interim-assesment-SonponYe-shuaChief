@@ -22,3 +22,13 @@ Example fetch for protected route (frontend):
 fetch('https://your-backend/api/auth/profile', { credentials: 'include' })
 
 Response formats are JSON. Error responses use `{ message: '...', error?: '...' }`.
+
+Frontend migration checklist
+1. Set frontend API base URL to your backend `/api` root.
+2. Ensure protected requests are sent with credentials (`credentials: 'include'`).
+3. Redirect to login when `/api/auth/profile` returns `401`.
+4. Use endpoint payload keys exactly as documented.
+5. Confirm backend `FRONTEND_ORIGIN` matches your Netlify domain.
+
+Detailed implementation handoff
+- See [docs/FRONTEND_HANDOFF.md](docs/FRONTEND_HANDOFF.md) for full integration flow and testing steps.
