@@ -44,7 +44,7 @@ Important:
 2. Click `Add IP Address`.
 3. For development, choose `Allow Access from Anywhere` (`0.0.0.0/0`).
 4. For production, restrict to your hosting provider IPs when possible.
-
+.mcxxxchhxxbx
 ## 5) Get connection string
 
 1. Go to `Database` > click `Connect` on your cluster.

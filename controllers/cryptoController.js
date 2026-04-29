@@ -30,7 +30,7 @@ exports.getNew = async (req, res) => {
 exports.createCrypto = async (req, res) => {
   try {
     const { name, symbol, price, image, change24 } = req.body;
-    if (!name || !symbol || price == null) return res.status(400).json({ message: 'name, symbol and price required' });
+    if (!name || !symbol || price == null) return res.status(400).json({ message: 'Name, symbol and price required' });
     const crypto = await Crypto.create({ name, symbol, price, image, change24 });
     res.status(201).json({ message: 'Crypto created', crypto });
   } catch (err) {
