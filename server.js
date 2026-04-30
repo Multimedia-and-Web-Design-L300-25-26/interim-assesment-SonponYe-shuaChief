@@ -9,9 +9,6 @@ const connectDB = require('./config/db');
 
 const app = express();
 
-// Connect to DB
-connectDB();
-
 // Middleware
 app.use(helmet());
 app.use(express.json());
@@ -34,4 +31,16 @@ app.use('/api/crypto', require('./routes/crypto'));
 app.get('/', (req, res) => res.json({ ok: true, message: 'Coinbase clone backend' }));
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+const startServer = async () => {
+  try {
+    // Start HTTP server only when database is available.
+    await connectDB();
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+  } catch (err) {
+    console.error('Startup failed:', err.message);
+    process.exit(1);
+  }
+};
+
+startServer();
