@@ -59,6 +59,13 @@ MONGO_URI=mongodb+srv://myUser:myPass@cluster0.xxxxx.mongodb.net/coinbase_clone?
 
 If your password contains special characters (like `@`, `#`, `/`), URL-encode it.
 
+If `mongodb+srv://` fails with `querySrv ECONNREFUSED`, copy the standard non-SRV URI from Atlas instead:
+1. Open your cluster in Atlas.
+2. Click `Connect` -> `Drivers`.
+3. Copy the connection string that lists specific hosts (it usually starts with `mongodb://` and includes multiple `:27017` hosts).
+4. Replace the `MONGO_URI` value in `.env` with that non-SRV string.
+5. Keep the same database name (`coinbase_clone`) at the end of the URI.
+
 ## 6) Configure frontend origin correctly
 
 Set `FRONTEND_ORIGIN` to your deployed Netlify URL, for example:

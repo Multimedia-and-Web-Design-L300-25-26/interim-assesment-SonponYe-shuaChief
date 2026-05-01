@@ -15,8 +15,14 @@ exports.register = async (req, res) => {
     if (existing) return res.status(400).json({ message: 'Email already registered' });
     const user = await User.create({ name, email, password });
     const token = signToken(user);
-    res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: 'lax' });
-    res.status(201).json({ message: 'User registered', user: { id: user._id, name: user.name, email: user.email } });
+    // Set cookie for browsers (cross-site cookies require SameSite=None and Secure in production)
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
+    });
+    // Also return token in response body so frontend can use Authorization header if needed
+    res.status(201).json({ message: 'User registered', token, user: { id: user._id, name: user.name, email: user.email } });
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
   }
@@ -31,8 +37,12 @@ exports.login = async (req, res) => {
     const isMatch = await user.matchPassword(password);
     if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
     const token = signToken(user);
-    res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: 'lax' });
-    res.json({ message: 'Logged in', user: { id: user._id, name: user.name, email: user.email } });
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
+    });
+    res.json({ message: 'Logged in', token, user: { id: user._id, name: user.name, email: user.email } });
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
   }

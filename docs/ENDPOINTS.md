@@ -7,6 +7,8 @@ Auth
 - POST `/api/auth/login` — body: `{ email, password }` — logs in, sets HTTP-only cookie `token`.
 - GET `/api/auth/profile` — protected — returns `{ id, name, email }`.
 
+Note: The login and register endpoints now also return the JWT token in the response body as `token`. Frontend may use this token in an `Authorization: Bearer <token>` header if cookies are not available (for example during local dev when backend is HTTP and frontend is HTTPS).
+
 Crypto
 - GET `/api/crypto` — returns all cryptocurrencies.
 - GET `/api/crypto/gainers` — returns top gainers sorted by 24h change desc.
