@@ -9,10 +9,24 @@ const connectDB = require('./config/db');
 
 const app = express();
 
-const allowedOrigins = (process.env.FRONTEND_ORIGINS || process.env.FRONTEND_ORIGIN || '')
-  .split(',')
-  .map((origin) => origin.trim())
-  .filter(Boolean);
+const normalizeOriginList = (value) => {
+  if (!value) return [];
+
+  const raw = value.includes('=') && !value.startsWith('http')
+    ? value.split('=').slice(1).join('=')
+    : value;
+
+  return raw
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean)
+    .map((origin) => origin.replace(/\/+$/, ''));
+};
+
+const allowedOrigins = [
+  ...normalizeOriginList(process.env.FRONTEND_ORIGINS),
+  ...normalizeOriginList(process.env.FRONTEND_ORIGIN)
+].filter((origin, index, array) => array.indexOf(origin) === index);
 
 // Middleware
 app.use(helmet());

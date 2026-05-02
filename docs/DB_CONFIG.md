@@ -100,6 +100,7 @@ npm run dev
 When deploying to Render (or similar):
 1. Add all env vars from `.env.example` in the hosting dashboard.
 2. Set `NODE_ENV=production`.
-3. Set `FRONTEND_ORIGIN` to the exact Netlify production URL.
-4. If you have more than one frontend domain, use `FRONTEND_ORIGINS` with a comma-separated list.
-4. Keep `JWT_SECRET` private and strong.
+3. Set `FRONTEND_ORIGIN` to a single exact Netlify production URL, for example `https://dcit323ia.netlify.app`.
+4. If you have more than one frontend domain, add a separate `FRONTEND_ORIGINS` variable with a comma-separated list of URLs.
+5. Make sure you do **not** paste `FRONTEND_ORIGINS=` into the value field. In Render, the key and value are entered separately.
+6. Keep `JWT_SECRET` private and strong.
