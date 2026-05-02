@@ -4,10 +4,16 @@ Base URL: `https://<your-backend-domain>/api` (or `http://localhost:5000/api` fo
 
 Auth
 - POST `/api/auth/register` — body: `{ name, email, password }` — registers user, sets HTTP-only cookie `token`.
+- POST `/api/auth/signup` — compatibility alias for register.
 - POST `/api/auth/login` — body: `{ email, password }` — logs in, sets HTTP-only cookie `token`.
+- POST `/api/auth/signin` — compatibility alias for login.
 - GET `/api/auth/profile` — protected — returns `{ id, name, email }`.
 
 Note: The login and register endpoints now also return the JWT token in the response body as `token`. Frontend may use this token in an `Authorization: Bearer <token>` header if cookies are not available (for example during local dev when backend is HTTP and frontend is HTTPS).
+
+Register payload note:
+- The backend accepts `name`, `fullName`, or `username`.
+- If none are provided, it falls back to the email username part before `@`.
 
 Crypto
 - GET `/api/crypto` — returns all cryptocurrencies.
