@@ -38,5 +38,39 @@ Frontend migration checklist
 4. Use endpoint payload keys exactly as documented.
 5. Confirm backend `FRONTEND_ORIGIN` matches your Netlify domain.
 
+## CORS & Environment Configuration (Critical for Deployment)
+
+**IMPORTANT**: For the backend to accept requests from your frontend, you must configure the following environment variables on your deployment platform (e.g., Render, Heroku):
+
+### Required Environment Variables
+
+Set these in your deployment platform's environment settings:
+
+```
+FRONTEND_ORIGIN=https://dcit323ia.netlify.app
+JWT_SECRET=your-secret-key-here
+MONGODB_URI=your-mongodb-connection-string
+NODE_ENV=production
+```
+
+**Note**: 
+- `FRONTEND_ORIGIN` can accept a single domain or comma-separated multiple domains (e.g., `https://dcit323ia.netlify.app,http://localhost:3000`)
+- The backend will only accept requests from the domain(s) specified in `FRONTEND_ORIGIN`
+- CORS preflight (OPTIONS) requests are automatically handled for all routes
+- All requests from the specified origin will include the necessary CORS headers:
+  - `Access-Control-Allow-Origin`: matches your frontend origin
+  - `Access-Control-Allow-Credentials: true` (for cookies/auth)
+  - `Access-Control-Allow-Headers: Content-Type, Authorization`
+  - `Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS`
+
+### Troubleshooting CORS Issues
+
+If you see CORS errors in the browser console:
+
+1. **Verify the frontend domain** matches exactly in `FRONTEND_ORIGIN` (including `https://` or `http://`)
+2. **Check environment variables** are set on your deployment platform (not just locally in `.env`)
+3. **Ensure credentials are included** in fetch requests: `fetch(url, { credentials: 'include' })`
+4. **If using Authorization header** instead of cookies, ensure it's set: `headers: { 'Authorization': 'Bearer <token>' }`
+
 Detailed implementation handoff
 - See [docs/FRONTEND_HANDOFF.md](docs/FRONTEND_HANDOFF.md) for full integration flow and testing steps.
