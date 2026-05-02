@@ -9,6 +9,11 @@ const connectDB = require('./config/db');
 
 const app = express();
 
+const allowedOrigins = (process.env.FRONTEND_ORIGINS || process.env.FRONTEND_ORIGIN || '')
+  .split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
 // Middleware
 app.use(helmet());
 app.use(express.json());
@@ -16,7 +21,12 @@ app.use(cookieParser());
 app.use(morgan('dev'));
 
 const corsOptions = {
-  origin: process.env.FRONTEND_ORIGIN || '*',
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.length === 0) return callback(null, true);
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    return callback(new Error(`CORS blocked for origin: ${origin}`));
+  },
   credentials: true
 };
 app.use(cors(corsOptions));

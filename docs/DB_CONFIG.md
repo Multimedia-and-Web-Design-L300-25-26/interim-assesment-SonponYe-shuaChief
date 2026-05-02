@@ -101,4 +101,5 @@ When deploying to Render (or similar):
 1. Add all env vars from `.env.example` in the hosting dashboard.
 2. Set `NODE_ENV=production`.
 3. Set `FRONTEND_ORIGIN` to the exact Netlify production URL.
+4. If you have more than one frontend domain, use `FRONTEND_ORIGINS` with a comma-separated list.
 4. Keep `JWT_SECRET` private and strong.
