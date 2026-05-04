@@ -21,9 +21,9 @@ const parseHostAndDb = (uri) => {
 };
 
 const connectDB = async () => {
-  const uri = process.env.MONGO_URI;
+  const uri = process.env.MONGO_URI || process.env.MONGODB_URI;
   if (!uri) {
-    console.error('MONGO_URI not set in environment');
+    console.error('MONGO_URI or MONGODB_URI not set in environment');
     return;
   }
 

@@ -7,9 +7,9 @@ You are required to implement the features using Node.js with MongoDB as the dat
 
 ## 1. Authentication System (JWT-Based)
 
-### Register (GET /register)
+### Register (POST /api/auth/register)
 
-Create a user account using:
+Create a user account using (POST):
 
 - Name
 - Email
@@ -17,9 +17,9 @@ Create a user account using:
 
 Send data to the backend API and ensure it is properly stored in the database. Also handle success and error responses appropriately, returning clear and meaningful feedback based on the outcome of each request.
 
-### Login (GET /login)
+### Login (POST /api/auth/login)
 
-Authenticate users using email and password, store the returned JWT token securely (preferably using HTTP-only cookies), and redirect the user to the homepage after a successful login.
+Authenticate users using email and password (POST). The backend returns a JWT and sets an HTTP-only cookie; the frontend should store the token securely or use `credentials: 'include'` for cookie-based auth. After successful login, the frontend should redirect the user to the homepage.
 
 ## 2. Protected User Profile Page
 
@@ -62,5 +62,30 @@ Send data to the backend API and ensure it is properly stored in the database (M
 ---
 
 Push your backend code to GitHub Classroom, deploy the backend (recommended: Render), and integrate it into your Coinbase clone frontend repository. After completing the integration, deploy the updated frontend as well. Finally, submit the links to your deployed backend, deployed frontend, and your updated Coinbase clone repository via the Google Form attached.
+
+## Run locally
+
+1. Install dependencies:
+
+```
+npm install
+```
+
+2. Create a `.env` file at project root with at least:
+
+```
+MONGO_URI=<your-mongo-uri>
+JWT_SECRET=<your-jwt-secret>
+FRONTEND_ORIGIN=http://localhost:3000
+NODE_ENV=development
+```
+
+3. Start the dev server:
+
+```
+npm run dev
+```
+
+The server will start on `http://localhost:5000` by default and expose the API under `/api`.
 
 **NOTE:** Ensure that all submitted links are accurate and working, as no marks will be awarded for invalid or inaccessible submissions.
