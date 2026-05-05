@@ -88,4 +88,34 @@ npm run dev
 
 The server will start on `http://localhost:5000` by default and expose the API under `/api`.
 
+## Seed dummy crypto data
+
+To populate MongoDB with sample cryptocurrency records for:
+
+- `GET /api/crypto`
+- `GET /api/crypto/gainers`
+- `GET /api/crypto/new`
+
+run:
+
+```bash
+npm run seed:crypto
+```
+
+This script upserts records by symbol (safe to run multiple times).
+
+If you want to clear existing crypto records and reseed from scratch:
+
+```bash
+npm run seed:crypto:fresh
+```
+
+Then verify:
+
+```bash
+curl http://localhost:5000/api/crypto
+curl http://localhost:5000/api/crypto/gainers
+curl http://localhost:5000/api/crypto/new
+```
+
 **NOTE:** Ensure that all submitted links are accurate and working, as no marks will be awarded for invalid or inaccessible submissions.
